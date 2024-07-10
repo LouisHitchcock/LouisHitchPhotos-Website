@@ -1,22 +1,14 @@
-.source-code-pro-<uniquifier> {
+p {
   font-family: "Source Code Pro", monospace;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
-}
-
-.abel-regular {
-  font-family: "Abel", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
-p {
-  font-family: "Source Code Pro", monospace;
-}
-
 h1 {
   font-family: "Abel", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .container {
