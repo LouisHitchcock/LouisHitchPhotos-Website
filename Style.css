@@ -12,7 +12,9 @@ h1 {
 }
 
 .container {
+  margin: auto;
+  width: 50%;
+  height: 50%;
+  text-align: center;
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
