@@ -1,0 +1,89 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+/*  text-decoration:none;*/
+  color: #000;
+}
+
+p {
+  font-family: "Source Code Pro", monospace;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  text-decoration:none;
+}
+
+h1 {
+  font-family: "Abel", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  text-decoration:none;
+}
+
+.container {
+  margin-top:20vh;
+  width: 100vw;
+}
+
+
+.instagram-icon {
+  right: 70px;
+  top:10px;
+  position:absolute;
+}
+
+/*Hamber Menu*/
+  .menuItem {
+    display: block;
+    margin: 2rem 4rem;
+    font-size: 1.8rem;
+    color: #000;
+    text-decoration: none;
+  }
+
+  .menuItem:hover {
+    text-decoration: underline;
+  }
+
+  .hamburger {
+    position: fixed;
+    z-index: 100;
+    top: 1rem;
+    right: 1rem;
+    padding: 4px;
+    background: #fff;
+    cursor: pointer;
+    border: black solid 0px;
+    font-size: 30px;
+  }
+
+  .closeIcon {
+    display: none;
+  }
+
+  .menu {
+    position: fixed;
+    transform: translateY(-100%);
+    transition: transform 0.2s;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    background: #fff;
+    color: #000;
+    list-style: none;
+    padding-top: 4rem;
+    font-family: "Source Code Pro", monospace;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    text-decoration:none;
+  }
+
+  .showMenu {
+    transform: translateY(0);
+  }

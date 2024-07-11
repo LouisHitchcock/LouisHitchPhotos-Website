@@ -12,6 +12,7 @@ p {
   font-style: normal;
   text-align: center;
   text-decoration:none;
+  font-size: 1.4em;
 }
 
 h1 {
@@ -21,6 +22,7 @@ h1 {
   font-style: normal;
   text-align: center;
   text-decoration:none;
+  font-size: 4em;
 }
 
 .container {
@@ -28,62 +30,195 @@ h1 {
   width: 100vw;
 }
 
-
-.instagram-icon {
-  right: 70px;
-  top:10px;
-  position:absolute;
+body {
+  overflow-x: hidden;
+  font-family: Sans-Serif;
+  margin: 0;
 }
 
-/*Hamber Menu*/
-  .menuItem {
-    display: block;
-    margin: 2rem 4rem;
-    font-size: 1.8rem;
-    color: #000;
-    text-decoration: none;
-  }
+a {
+  font-family: "Source Code Pro", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
 
-  .menuItem:hover {
-    text-decoration: underline;
-  }
+.menu-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background: #ffffff;
+  color: #000000;
+  padding: 20px;
+  z-index: 1;
+  -webkit-user-select: none;
+  user-select: none;
+  box-sizing: border-box;
+}
 
-  .hamburger {
-    position: fixed;
-    z-index: 100;
-    top: 1rem;
-    right: 1rem;
-    padding: 4px;
+.menu-logo {
+  line-height: 0;
+  margin: 0 20px;
+}
+
+.menu-logo img {
+  max-height: 70px;
+  max-width: 140px;
+  flex-shrink: 0;
+}
+
+.menu-container a {
+  text-decoration: none;
+  color: #000;
+  transition: color 0.3s ease;
+}
+
+.menu-container a:hover {
+  color: #000000;
+}
+
+.menu-container input {
+  display: block;
+  width: 35px;
+  height: 25px;
+  margin: 0;
+  position: absolute;
+  cursor: pointer;
+  opacity: 0; /* hide this */
+  z-index: 2; /* and place it over the hamburger */
+  -webkit-touch-callout: none;
+}
+
+/* Burger menu */
+.menu-container span {
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  background: #4a4a4a;
+  border-radius: 3px;
+  z-index: 1;
+  transform-origin: 4px 0px;
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease;
+}
+
+.menu-container span:first-child {
+  transform-origin: 0% 0%;
+}
+
+.menu-container span:nth-child(3) {
+  transform-origin: 0% 100%;
+}
+
+.menu-container input:checked ~ span {
+  opacity: 1;
+  transform: rotate(45deg) translate(3px,-1px);
+  background: #000;
+}
+
+.menu-container input:checked ~ span:nth-child(4) {
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+.menu-container input:checked ~ span:nth-child(3) {
+  transform: rotate(-45deg) translate(-5px,11px);
+}
+
+.menu ul {
+  list-style: none;
+}
+
+.menu li {
+  padding: 10px 0;
+  font-size: 22px;
+}
+
+/* mobile styles */
+@media only screen and (max-width: 806px) { 
+  .menu-container {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+.menu-logo {
+  line-height: 0;
+  margin: 0 20px;
+}
+
+.menu-logo img {
+  max-height: 40px;
+  max-width: 100px;
+  flex-shrink: 0;
+}
+
+  .menu {
+    position: absolute;
+    box-sizing: border-box;
+    width: 300px;
+    right: -300px;
+    top: 0;
+    margin: -20px;
+    padding: 75px 50px 50px;
     background: #fff;
-    cursor: pointer;
-    border: black solid 0px;
-    font-size: 30px;
+    color: #000;
+    -webkit-font-smoothing: antialiased;
+    /* to stop flickering of text in safari */
+    transform-origin: 0% 0%;
+    transform: translateX(0%);
+    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
   }
 
-  .closeIcon {
+  .menu-container input:checked ~ .menu {
+    transform: translateX(-100%);
+  }
+}
+
+/* desktop styles */
+@media only screen and (min-width: 800px) { 
+  .menu-container {
+    width: 100%;
+  }
+
+  .menu-container a {
+    color: #000;
+  }
+
+  .menu-container input {
+    display: none;
+  }
+
+  /* Burger menu */
+  .menu-container span {
     display: none;
   }
 
   .menu {
-    position: fixed;
-    transform: translateY(-100%);
-    transition: transform 0.2s;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 99;
-    background: #fff;
-    color: #000;
-    list-style: none;
-    padding-top: 4rem;
-    font-family: "Source Code Pro", monospace;
-    font-weight: 400;
-    font-style: normal;
-    text-align: center;
-    text-decoration:none;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
   }
 
-  .showMenu {
-    transform: translateY(0);
+  .menu ul {
+    display: flex;
+    padding: 0;
   }
+
+  .menu li {
+    padding: 0 20px;
+  }
+}
+
+.footer {
+  bottom:0;
+  font-family: "Source Code Pro", monospace;
+  font-weight: 400;
+  font-style: normal;
+  padding:130px 0 100px 0;
+  text-align:center;
+}
