@@ -1,0 +1,6 @@
+# Ignore specific Python scripts
+/imageCompressor.py
+/add-images.py
+
+# Ignore all contents in the 'uncompressed' directory within 'grid-gallery-images'
+/grid-gallery-images/uncompressed/
