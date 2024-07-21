@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     const gallery = document.getElementById('gallery');
-    const imageFolder = 'grid-gallery-images/';
+    const imageFolder = './grid-gallery-images/';
 
-    fetch('images.json')
+    fetch('./images.json')
         .then(response => response.json())
         .then(images => {
             images.forEach(image => {
