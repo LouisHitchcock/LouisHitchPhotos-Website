@@ -1,0 +1,85 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Source Code Pro", monospace;
+    color: #fff;
+}
+
+.contact-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    text-align: left;
+    color: #fff;
+}
+
+.contact-content * {
+    color: #fff;
+    text-align: left;
+}
+
+.contact-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+}
+
+.contact-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.contact-content {
+    z-index: 1;
+    max-width: 900px;
+    padding: 20px 100px;
+}
+
+.contact-content h1 {
+    font-family: "Abel", sans-serif;
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.contact-content p {
+    font-size: 1.5em;
+}
+
+.contact-content a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.contact-content a:hover {
+    color: #bbb;
+}
+
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.menu-container {
+    background-color: rgb(10, 10, 10, 1);
+  margin-bottom: 0px;
+}
+
+.menu li a{
+    color:#fff;
+}

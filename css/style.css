@@ -214,6 +214,9 @@ a {
   }
 }
 
+.menu:hover li a {
+  color:#bbb;
+}
 .footer {
   bottom:0;
   font-family: "Source Code Pro", monospace;
