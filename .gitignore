@@ -4,3 +4,6 @@
 
 # Ignore all contents in the 'uncompressed' directory within 'grid-gallery-images'
 /grid-gallery-images/uncompressed/
+
+# Ignore all PSD files
+*.psd
