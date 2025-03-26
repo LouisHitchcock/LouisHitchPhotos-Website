@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex">
+  <title>Client Gallery Admin</title>
+  <link rel="stylesheet" href="/css/clientStyle.css" />
+</head>
+<body>
+  <div id="admin-header"></div>
+
+  <nav id="admin-nav">
+    <a class="newClient" href="addClient.html">New Client</a>
+    <a href="admin-gallery.html">Admin Gallery</a>
+    <button id="signOutBtn" class="logout">Log Out</button>
+  </nav>
+
+  <div id="admin-ui">
+  <div id="client-list"></div>
+  </div>
+
+  <div id="login-ui" style="display: none;"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { firebaseConfig } from "./config/firebase-config.js";
+    import {
+      getAuth,
+      signInWithPopup,
+      GoogleAuthProvider,
+      onAuthStateChanged,
+      signOut,
+      getIdTokenResult
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+
+    const adminUI = document.getElementById("admin-ui");
+    const loginUI = document.getElementById("login-ui");
+    const clientList = document.getElementById("client-list");
+
+    async function loadClients() {
+      const querySnapshot = await getDocs(collection(db, "clients"));
+
+      if (querySnapshot.empty) {
+        clientList.innerHTML = "<p>No clients found.</p>";
+        return;
+      }
+
+      querySnapshot.forEach((docSnap) => {
+        const slug = docSnap.id;
+        const data = docSnap.data();
+
+        const container = document.createElement("div");
+        container.className = "client-card";
+        container.style.backgroundImage = `url('${data.heroImage}')`;
+        container.style.backgroundSize = "cover";
+        container.style.backgroundPosition = "center";
+        container.style.color = "white";
+        container.style.position = "relative";
+
+        container.innerHTML = `
+          <div class="card-overlay">
+            <p><strong>${data.title}</strong></p>
+            <p>${data.date}</p>
+            <a href="clients/index.html?slug=${slug}" target="_blank">
+              <button>Open</button>
+            </a>
+          </div>
+        `;
+
+
+        clientList.appendChild(container);
+      });
+    }
+
+    function showLogin() {
+      adminUI.style.display = "none";
+      loginUI.style.display = "flex";
+      loginUI.style.flexDirection = "column";
+      loginUI.style.alignItems = "center";
+      loginUI.style.justifyContent = "center";
+      loginUI.style.height = "100vh";
+
+      const loginButton = document.createElement("button");
+      loginButton.textContent = "Sign in with Google";
+      loginButton.className = "primary";
+      loginButton.onclick = () => signInWithPopup(auth, provider);
+
+      loginUI.appendChild(loginButton);
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const tokenResult = await getIdTokenResult(user);
+        if (!tokenResult.claims.admin) {
+          alert("Access denied. You are not an admin.");
+          signOut(auth).then(() => location.reload());
+          return;
+        }
+
+        loginUI.style.display = "none";
+        adminUI.style.display = "block";
+
+        document.getElementById("signOutBtn").onclick = () => {
+          signOut(auth).then(() => location.reload());
+        };
+
+        loadClients();
+      } else {
+        showLogin();
+      }
+    });
+  </script>
+</body>
+</html>

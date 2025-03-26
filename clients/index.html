@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex">
+  <title>Client Gallery</title>
+  <link rel="stylesheet" href="../css/clientStyle.css" />
+  <style>
+    #auth {
+      height: 100vh;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #password-form {
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    #password-form label {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+
+    #password-form input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid black;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+
+    #password-form button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #error-msg {
+      color: red;
+      margin-top: 0.5rem;
+    }
+
+    .gallery-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .gallery-inner {
+      display: flex;
+      gap: 2rem;
+      max-width: 1200px;
+      width: 90%;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      flex: 1 1 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card.hero img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+
+    .card.info {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .card.info .text button:hover {
+      margin-top: 1.5rem;
+      padding: 10px 50px;
+      border-radius: 15px;
+      border: 2px solid black;
+      background: black;
+      color:white;
+      cursor: pointer;
+    }
+
+    .card.info .text p {
+      margin: 0.5rem 0;
+    }
+
+    .card.info .text button {
+      margin-top: 1.5rem;
+      padding: 10px 50px;
+      border-radius: 15px;
+      border: 2px solid black;
+      background: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div id="auth">
+      <form id="password-form" onsubmit="event.preventDefault(); checkPassword();">
+        <label for="password-input">Please Enter Your Password</label>
+        <input type="password" id="password-input" placeholder="Enter password" required />
+        <button type="submit">Submit</button>
+        <p id="error-msg"></p>
+      </form>
+    </div>
+
+    <div id="content" style="display:none;">
+      <h1 id="title"></h1>
+      <div id="gallery"></div>
+    </div>
+  </div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { firebaseConfig } from "../config/firebase-config.js";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const slug = urlParams.get("slug");
+
+    let clientData;
+
+    async function loadClient() {
+      if (!slug) {
+        document.getElementById("app").innerHTML = "<p>No client specified.</p>";
+        return;
+      }
+
+      const docRef = doc(db, "clients", slug);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        clientData = docSnap.data();
+        document.getElementById("auth").style.display = "flex";
+      } else {
+        document.getElementById("app").innerHTML = "<p>Client not found.</p>";
+      }
+    }
+
+    window.checkPassword = function () {
+      const input = document.getElementById("password-input").value;
+      const error = document.getElementById("error-msg");
+
+      if (input === clientData.password) {
+        document.getElementById("auth").style.display = "none";
+        showGallery();
+      } else {
+        error.textContent = "Incorrect password. Try again.";
+      }
+    };
+
+    function showGallery() {
+      const content = document.getElementById("content");
+
+      content.innerHTML = `
+        <div class="gallery-wrapper">
+          <div class="gallery-inner">
+            <div class="card hero">
+              <img src="${clientData.heroImage}" alt="Hero Image" />
+            </div>
+            <div class="card info">
+              <div class="text">
+                <p><strong>Title:</strong> ${clientData.title}</p>
+                <p><strong>Date:</strong> ${clientData.date}</p>
+                <p><strong>Location:</strong> ${clientData.location}</p>
+                <a href="${clientData.driveLink}" target="_blank">
+                  <button>Click Me</button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      content.style.display = "block";
+    }
+
+    loadClient();
+  </script>
+</body>
+</html>

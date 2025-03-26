@@ -4,3 +4,17 @@
 
 # Ignore all contents in the 'uncompressed' directory within 'grid-gallery-images'
 /grid-gallery-images/uncompressed/
+
+# Ignore Firebase config and secrets
+/config/
+
+# Node dependencies (if used)
+node_modules/
+
+# Build output (optional)
+dist/
+build/
+
+# System files
+.DS_Store
+.env

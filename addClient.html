@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex">
+  <title>Admin - Add Client</title>
+  <link rel="stylesheet" href="/css/clientStyle.css" />
+</head>
+<body>
+<nav id="admin-nav">
+  <a href="admin-gallery.html">← Admin Gallery</a>
+  <button id="signOutBtn" class="logout">Log Out</button>
+</nav>
+
+<form id="client-form">
+  <label>Client Slug (URL):</label><br>
+  <input type="text" id="slug" placeholder="e.g. james-wedding" required /><br><br>
+
+  <label>Title:</label><br>
+  <input type="text" id="title" placeholder="e.g. James' Wedding Gallery" required /><br><br>
+
+  <label>Password:</label><br>
+  <input type="password" id="password" required /><br><br>
+
+  <label>Date:</label><br>
+  <input type="text" id="date" placeholder="e.g. March 20, 2025" required /><br><br>
+
+  <label>Location:</label><br>
+  <input type="text" id="location" placeholder="e.g. Brighton Pier" required /><br><br>
+
+  <label>Hero Image URL:</label><br>
+  <input type="text" id="heroImage" placeholder="https://example.com/image.jpg" required /><br><br>
+
+  <label>Google Drive Link:</label><br>
+  <input type="text" id="driveLink" placeholder="Link to folder/download" required /><br><br>
+
+  <button type="submit" class="primary">Add Client</button>
+</form>
+
+<p id="status"></p>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { firebaseConfig } from "./config/firebase-config.js";
+  import {
+    getAuth,
+    signInWithPopup,
+    GoogleAuthProvider,
+    onAuthStateChanged,
+    signOut,
+    getIdTokenResult
+  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+
+  const form = document.getElementById("client-form");
+  const status = document.getElementById("status");
+
+  function showLogin() {
+    form.style.display = "none";
+    status.textContent = "";
+
+    const loginWrapper = document.createElement("div");
+    loginWrapper.style = "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 80vh;";
+    loginWrapper.id = "login-wrapper";
+
+    const loginButton = document.createElement("button");
+    loginButton.textContent = "Sign in with Google";
+    loginButton.className = "primary";
+    loginButton.onclick = () => signInWithPopup(auth, provider);
+
+    loginWrapper.appendChild(loginButton);
+    document.body.appendChild(loginWrapper);
+  }
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const tokenResult = await getIdTokenResult(user);
+      if (!tokenResult.claims.admin) {
+        alert("Access denied. You are not an admin.");
+        signOut(auth).then(() => location.reload());
+        return;
+      }
+
+      document.getElementById("login-wrapper")?.remove();
+      form.style.display = "block";
+
+      document.getElementById("signOutBtn").onclick = () => {
+        signOut(auth).then(() => location.reload());
+      };
+    } else {
+      showLogin();
+    }
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const slug = document.getElementById("slug").value.trim();
+    const title = document.getElementById("title").value.trim();
+    const date = document.getElementById("date").value.trim();
+    const location = document.getElementById("location").value.trim();
+    const driveLink = document.getElementById("driveLink").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const heroImage = document.getElementById("heroImage").value.trim();
+
+    if (!slug || !title || !password || !date || !location || !driveLink || !heroImage) {
+      status.textContent = "Please fill in all fields.";
+      return;
+    }
+
+    try {
+      await setDoc(doc(db, "clients", slug), {
+        title,
+        password,
+        date,
+        location,
+        heroImage,
+        driveLink
+      });
+
+      status.style.color = "green";
+      status.textContent = `Client "${slug}" added successfully!`;
+      form.reset();
+    } catch (err) {
+      console.error(err);
+      status.style.color = "red";
+      status.textContent = "Error adding client.";
+    }
+  });
+</script>
+</body>
+</html>
