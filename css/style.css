@@ -214,7 +214,7 @@ a {
   }
 }
 
-.menu:hover li a {
+.menu li a:hover {
   color:#bbb;
 }
 .footer {
