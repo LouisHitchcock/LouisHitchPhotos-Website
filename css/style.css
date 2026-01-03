@@ -1,9 +1,24 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --nav-bg: #ffffff;
+  --nav-text: #000000;
+  --footer-text: #000000;
+}
+
+[data-theme="dark"] {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --nav-bg: #0a0a0a;
+  --nav-text: #ffffff;
+  --footer-text: #ffffff;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-/*  text-decoration:none;*/
-  color: #000;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 p {
@@ -34,6 +49,8 @@ body {
   overflow-x: hidden;
   font-family: Sans-Serif;
   margin: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 a {
@@ -48,8 +65,8 @@ a {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  background: #ffffff;
-  color: #000000;
+  background: var(--nav-bg);
+  color: var(--nav-text);
   padding: 20px;
   z-index: 1;
   -webkit-user-select: none;
@@ -70,7 +87,7 @@ a {
 
 .menu-container a {
   text-decoration: none;
-  color: #000;
+  color: var(--nav-text);
   transition: color 0.3s ease;
 }
 
@@ -97,7 +114,7 @@ a {
   height: 4px;
   margin-bottom: 5px;
   position: relative;
-  background: #4a4a4a;
+  background: var(--nav-text);
   border-radius: 3px;
   z-index: 1;
   transform-origin: 4px 0px;
@@ -117,7 +134,7 @@ a {
 .menu-container input:checked ~ span {
   opacity: 1;
   transform: rotate(45deg) translate(3px,-1px);
-  background: #000;
+  background: var(--nav-text);
 }
 
 .menu-container input:checked ~ span:nth-child(4) {
@@ -191,11 +208,11 @@ a {
     height: 100vh;
     box-sizing: border-box;
     padding: 100px 50px 50px;
-    background: #fff;
-    color: #000;
+    background: var(--bg-color);
+    color: var(--text-color);
     -webkit-font-smoothing: antialiased;
     transform: translateX(100%);
-    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0), background-color 0.3s ease;
     z-index: 9999;
     display: flex;
     flex-direction: column;
@@ -275,4 +292,5 @@ a {
   font-style: normal;
   padding:130px 0 100px 0;
   text-align:center;
+  color: var(--footer-text);
 }

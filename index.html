@@ -56,15 +56,28 @@
 <script>
   document.getElementById('copyright-year').textContent = new Date().getFullYear();
 
-  // Toggle headshot on click
+  // Dark mode toggle
   const logoToggle = document.getElementById('logo-toggle');
   const logoImg = document.getElementById('logo-img');
-  let isDark = true;
+  
+  // Check for saved theme preference or default to light
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  if (savedTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    logoImg.src = '/images/headshot/Headshot 2025 Light.jpg';
+  }
   
   logoToggle.addEventListener('click', (e) => {
     e.preventDefault();
-    isDark = !isDark;
-    logoImg.src = isDark ? '/images/headshot/Headshot 2025 Dark.jpg' : '/images/headshot/Headshot 2025 Light.jpg';
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    logoImg.src = newTheme === 'dark' 
+      ? '/images/headshot/Headshot 2025 Light.jpg' 
+      : '/images/headshot/Headshot 2025 Dark.jpg';
   });
 </script>
 
