@@ -23,8 +23,8 @@
     <span></span>
 
     <!-- logo -->
-    <a href="#" class="menu-logo">
-        <img src="/images/LogoScaledInvert.png" alt="LouisHitchPhotos"/>
+    <a href="#" class="menu-logo" id="logo-toggle">
+        <img src="/images/headshot/Headshot 2025 Light.jpg" alt="LouisHitchPhotos" id="logo-img"/>
     </a>
 
     <!-- menu items -->
@@ -58,6 +58,17 @@
 
 <script>
   document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
+  // Toggle headshot on click
+  const logoToggle = document.getElementById('logo-toggle');
+  const logoImg = document.getElementById('logo-img');
+  let isLight = true;
+  
+  logoToggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    isLight = !isLight;
+    logoImg.src = isLight ? '/images/headshot/Headshot 2025 Light.jpg' : '/images/headshot/Headshot 2025 Dark.jpg';
+  });
 </script>
 
 </body>
