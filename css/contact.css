@@ -87,6 +87,19 @@ body, html {
     color:#fff;
 }
 
+/* Contact page specific: force white logo border and hamburger */
+.menu-logo img {
+    border-color: #fff !important;
+}
+
+.menu-container span {
+    background: #fff !important;
+}
+
+.menu-container input:checked ~ span {
+    background: #fff !important;
+}
+
 /* Make menu text visible on white fullscreen menu */
 @media only screen and (max-width: 806px) {
     .menu li a {
