@@ -259,10 +259,6 @@ a {
     width: 100%;
   }
 
-  .menu-container a {
-    color: #000;
-  }
-
   .menu-container input {
     display: none;
   }
