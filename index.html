@@ -50,8 +50,12 @@
 <script src="gallery-script.js"></script>
 
 <div class="footer">
-<h4 class="footer">© 2024 LOUIS HITCHCOCK</h4>
+<h4 class="footer">© <span id="copyright-year"></span> LOUIS HITCHCOCK</h4>
 </div>
+
+<script>
+  document.getElementById('copyright-year').textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>
