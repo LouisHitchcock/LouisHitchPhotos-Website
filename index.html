@@ -23,7 +23,7 @@
 
   <!-- logo -->
   <a href="#" class="menu-logo" id="logo-toggle">
-    <img src="/images/headshot/Headshot 2025 Dark.jpg" alt="LouisHitchPhotos" id="logo-img"/>
+    <img src="/images/headshot/Headshot 2025 Light.jpg" alt="LouisHitchPhotos" id="logo-img"/>
   </a>
 
   <!-- menu items -->
@@ -64,7 +64,7 @@
   const savedTheme = localStorage.getItem('theme') || 'light';
   if (savedTheme === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
-    logoImg.src = '/images/headshot/Headshot 2025 Light.jpg';
+    logoImg.src = '/images/headshot/Headshot 2025 Dark.jpg';
   }
   
   logoToggle.addEventListener('click', (e) => {
@@ -76,8 +76,8 @@
     localStorage.setItem('theme', newTheme);
     
     logoImg.src = newTheme === 'dark' 
-      ? '/images/headshot/Headshot 2025 Light.jpg' 
-      : '/images/headshot/Headshot 2025 Dark.jpg';
+      ? '/images/headshot/Headshot 2025 Dark.jpg' 
+      : '/images/headshot/Headshot 2025 Light.jpg';
   });
 </script>
 
