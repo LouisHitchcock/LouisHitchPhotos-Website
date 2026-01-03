@@ -96,8 +96,9 @@ body, html {
     background: #fff !important;
 }
 
+/* X should be black on white menu background */
 .menu-container input:checked ~ span {
-    background: #fff !important;
+    background: #000 !important;
 }
 
 /* Make menu text visible on white fullscreen menu */
