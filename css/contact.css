@@ -12,10 +12,11 @@ body, html {
     height: 100vh;
     overflow: hidden;
     display: flex;
-    align-items: center;
-    justify-content: left;
+    align-items: flex-start;
+    justify-content: flex-start;
     text-align: left;
     color: #fff;
+    padding-top: 30vh;
 }
 
 .contact-content * {
@@ -41,9 +42,11 @@ body, html {
     left: 0;
 }
 .contact-content {
-    z-index: 1;
-    max-width: 900px;
-    padding: 20px 100px;
+    z-index: -1;
+    width: 100%;
+    max-width: none;
+    padding: 20px 50px;
+    box-sizing: border-box;
 }
 
 .contact-content h1 {
@@ -82,4 +85,24 @@ body, html {
 
 .menu li a{
     color:#fff;
+}
+
+/* Make menu text visible on white fullscreen menu */
+@media only screen and (max-width: 806px) {
+    .menu li a {
+        color: #000;
+    }
+
+    .contact-content h1 {
+        font-size: 3em;
+        margin-bottom: 0px;
+    }
+
+    .contact-content p {
+        font-size: 1em;
+    }
+
+    .contact-content {
+        padding: 20px 30px;
+    }
 }
