@@ -4,6 +4,7 @@
   --nav-bg: #ffffff;
   --nav-text: #000000;
   --footer-text: #000000;
+  --logo-border: #000000;
 }
 
 [data-theme="dark"] {
@@ -12,6 +13,7 @@
   --nav-bg: #0a0a0a;
   --nav-text: #ffffff;
   --footer-text: #ffffff;
+  --logo-border: #ffffff;
 }
 
 * {
@@ -81,8 +83,12 @@ a {
 
 .menu-logo img {
   max-height: 70px;
-  max-width: 140px;
+  max-width: 70px;
   flex-shrink: 0;
+  border-radius: 50%;
+  border: 3px solid var(--logo-border);
+  transition: border-color 0.3s ease;
+  object-fit: cover;
 }
 
 .menu-container a {
@@ -195,8 +201,8 @@ a {
   }
 
 .menu-logo img {
-  max-height: 40px;
-  max-width: 100px;
+  max-height: 50px;
+  max-width: 50px;
   flex-shrink: 0;
 }
 
